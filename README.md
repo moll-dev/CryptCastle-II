@@ -1,4 +1,4 @@
-CyrptCastle-II
+CryptCastle-II
 ==============
 
-Cyrpt &amp; Castle II 
+Crypt &amp; Castle II 

@@ -1,1 +1,5 @@
-Use PyCharm
+Michael was here.
+Requirements-
+
+Qt
+>http://qt-project.org/downloads

@@ -7,6 +7,7 @@ P.S. this will probably be moved to the Gitwiki pretty soon? If there's enough c
 
 P.P.S that probably won't happen
 
+Use pycharm!
 
 TODO
 - [x] Make Documentation

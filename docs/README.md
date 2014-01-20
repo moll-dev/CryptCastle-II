@@ -5,3 +5,9 @@ This is a section for documents describing various parts of the CCII system, how
 P.S. this will probably be moved to the Gitwiki pretty soon? If there's enough content here anyways
 
 P.P.S that probably won't happen
+
+
+[TODO]
+-[x] Make Documentation
+-[] Setup Environment!
+-[] Write an interpreter!

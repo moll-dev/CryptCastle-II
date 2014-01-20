@@ -1,0 +1,7 @@
+Requirements-
+
+Unicurses
+http://sourceforge.net/projects/pyunicurses/files/latest/download
+
+http://www.lfd.uci.edu/~gohlke/pythonlibs/#curses
+download 2.7 amd 64 

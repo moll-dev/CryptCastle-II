@@ -14,8 +14,10 @@ fgtext  = "dark goldenrod"
 class gui(Frame):
 
     def __init__(self, parent):
-        Frame.__init__(self, parent)
 
+
+        Frame.__init__(self, parent)
+        self.command = ""
         self.parent = parent
 
         self.initUI()
@@ -39,12 +41,13 @@ class gui(Frame):
         consoleFrame = Frame(topFrame, relief=FLAT, borderwidth=1, bg=bgcolor)       #Top Frame
         consoleFrame.pack(fill=X, expand=1)
 
-        consoleText = Text(consoleFrame,bg=bgtext,relief=SUNKEN,bd=5,height=31,width=30)
-        consoleText.pack(fill=X,expand=1,side=LEFT,padx = 6, pady=4)
-        consoleText.configure(state='disabled')
+        self.consoleText = Text(consoleFrame,bg=bgtext,relief=SUNKEN,bd=5,height=31,width=30,
+                           fg=fgtext)
+        self.consoleText.pack(fill=X,expand=1,side=LEFT,padx = 6, pady=4)
+        self.consoleText.configure(state='disabled')
 
-        objectText = Text(consoleFrame,bg="DodgerBlue4",relief=SUNKEN,bd=5,
-                          height=31,width=15,selectbackground="DodgerBlue4")
+        objectText = Label(consoleFrame,bg="DodgerBlue4",relief=SUNKEN,bd=5,
+                          height=31,width=15)#,selectbackground="DodgerBlue4")
         objectText.pack(side=RIGHT,padx=5)
         objectText.configure(state='disabled')
 
@@ -57,11 +60,10 @@ class gui(Frame):
         text = "Enter "+s
         self.enterButton = Button(self, text=text,font=("System",12),
                              bg="tomato4",fg="light goldenrod",
-                             activebackground=fgtext, command=self.OnPressEnter)
+                             activebackground=fgtext, command=self.OnButtonPress)
         self.enterButton.pack(side=RIGHT, padx=6, pady= 6)
 
-        self.command = Tkinter.StringVar()
-        self.entryText   = Text(self, relief=SUNKEN, height=1,
+        self.entryText   = Entry(self, relief=SUNKEN,
                            selectborderwidth=2, width=120,
                            font=("System",16), bd=4, bg="gray13",
                            selectbackground="gray23",
@@ -72,7 +74,22 @@ class gui(Frame):
 
     def OnPressEnter(self,event):
         self.statText.config(bg=fgtext)
-        self.labelVariable.set(self.entryText.get())
+        self.command =self.entryText.get()
+        self.consoleText.configure(state='normal')
+        self.consoleText.insert(INSERT,self.command)
+        self.consoleText.configure(state='disabled')
+
+    def OnButtonPress(self):
+        self.statText.config(bg=fgtext)
+        self.command = self.entryText.get()
+        #Parse the text
+
+        #step
+
+
+        self.consoleText.configure(state='normal')
+        self.consoleText.insert(INSERT,self.command)
+        self.consoleText.configure(state='disabled')
 
 def parseCommand(string):
     print string

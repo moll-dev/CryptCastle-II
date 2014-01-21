@@ -1,11 +1,23 @@
 from Tkinter import *
 from ttk import Style
-from gui import *
+from engine import *
 
 bgcolor = "grey26"
 bgtext  = "grey13"
 fgtext  = "dark goldenrod"
 
+'''
+    The purpose of this file (I know gui is a misnomner) is to create a
+    gui for the game and provide hooks and interupts into the lower levels
+    of the game. Like the engine object.
+
+
+
+
+
+
+
+'''
 class gui(Frame):
 
     def __init__(self, parent):
@@ -13,7 +25,7 @@ class gui(Frame):
         Frame.__init__(self, parent)
         self.command = ""
         self.parent = parent
-
+        e = engine()
         self.initUI()
 
     def initUI(self):
@@ -40,10 +52,14 @@ class gui(Frame):
         self.consoleText.pack(fill=X,expand=1,side=LEFT,padx = 6, pady=4)
         self.consoleText.configure(state='disabled')
 
-        objectText = Label(consoleFrame,bg="DodgerBlue4",relief=SUNKEN,bd=5,
-                          height=31,width=15)#,selectbackground="DodgerBlue4")
-        objectText.pack(side=RIGHT,padx=5)
-        objectText.configure(state='disabled')
+        self.objectText = Label(consoleFrame,bg="DodgerBlue4",relief=SUNKEN,bd=5,
+                          height=15,width=20)#,selectbackground="DodgerBlue4")
+        self.objectText.pack(side=TOP,padx=5,pady=5)
+
+
+        self.invText = Label(consoleFrame,bg="DodgerBlue4",relief=SUNKEN,bd=5,
+                          height=16,width=20)#,selectbackground="DodgerBlue4")
+        self.invText.pack(side=BOTTOM,padx=5,pady=5)
 
         #Lower Gui Bar
         promptLabel = Label(self,text=">",font=("System",17),

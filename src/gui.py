@@ -25,7 +25,7 @@ class gui(Frame):
         Frame.__init__(self, parent)
         self.command = ""
         self.parent = parent
-        e = engine()
+        #e = engine()
         self.initUI()
 
     def initUI(self):

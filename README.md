@@ -7,3 +7,5 @@ A python text based adventure with a twist!
 
 Written using Tkinter! (shh I know it's old)
 Cyrpt &amp; Castle II 
+
+Copyleft 2014 under GPL 3.0

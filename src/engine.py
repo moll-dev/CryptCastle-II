@@ -7,13 +7,14 @@ class Engine():
         self.commandstr =""
         self.parent = parent
         self.command = Command("test", "test")
+        self.guy = Player()
 
     def step(self):
         command = Command(self.commandstr.split())
+        self.do(command)
 
-
-    def do(self):
-        self.consolePrint(self.command)
+    def do(self, command):
+        self.consolePrint(command.verb)
 
     def consolePrintln(self,str):
         self.parent.consoleText.configure(state='normal')
@@ -45,6 +46,7 @@ class Player(object):
 
     loc =[0,0]
     map = "ballz"
+    room = "room"
     inv =[]
 
     def move(self,direction):

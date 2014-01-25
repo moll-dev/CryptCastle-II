@@ -71,7 +71,7 @@ class gui(Frame):
         self.entryText   = Entry(self, relief=SUNKEN,
                            selectborderwidth=2, width=120,
                            font=("System",16), bd=4, bg="gray13",
-                           selectbackground="gray23",
+                           selectbackground="gray23", insertbackground="Goldenrod",
                            fg=fgtext)
         self.entryText.pack(side=LEFT,padx=0)
         self.entryText.focus_set()

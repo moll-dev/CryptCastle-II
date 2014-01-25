@@ -36,22 +36,20 @@ class Command(object):
             self.verb = args[0]
             self.object = args[1]
 
-            print self.verb
-            print self.object
-
 class Player(object):
     hp = 100
     stm = 100
 
 
     loc =[0,0]
-    map = "ballz"
+    map = "map"
     room = "room"
     inv =[]
 
     def move(self,direction):
         self.loc[0] += 1
         self.loc[1] += 1
+        self.room = map.getroom(self.loc[0],self.loc[1])
 
     def warp(self,map):
         pass

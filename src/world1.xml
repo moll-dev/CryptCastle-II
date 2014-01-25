@@ -1,0 +1,15 @@
+<?xml version= "1.0"?>
+<World x="10" y="10" name="Middle Earth" desc="hobbits are here">
+
+	<Map x="1" y="1" name="Rivendale" decs="dfads">
+		<Room x="3" y="3" name="outhouse" desc="" contents="bucket spatula sword" cangonorth="0">
+
+	</Map>
+	<Map x=1 y=1 name="Rivenasdfdsfle" decs="dfads">
+
+	</Map>
+
+
+
+
+</World>

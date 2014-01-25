@@ -6,6 +6,9 @@ class Map(object):
     def __init__(self):
         pass
 
+    def getRoom(self, x,y):
+        return self.grid[x][y]
+
 class Room(object):
     contents = [None]
 
@@ -14,7 +17,7 @@ class Room(object):
         self.description = description
 
 
-castle = Room("Castle")
+castle = Room("Castle","Herpderp")
 
 castle.contents[0] = "Spatula"
 

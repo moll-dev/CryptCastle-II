@@ -88,7 +88,7 @@ class gui(Frame):
 
     def OnButtonPress(self):
         self.e.command = self.entryText.get()
-        self.e.do()
+        self.e.step()
 
 
         '''

@@ -22,6 +22,7 @@ class gui(Frame):
         self.initUI()
         self.initColor()
         self.buttonPress = False
+
     def initUI(self):
         self.parent.title("[ Crypt & Castle II ]")
         self.style = Style()
@@ -68,11 +69,14 @@ class gui(Frame):
                              activebackground=fgtext, command=self.OnButtonPress)
         self.enterButton.pack(side=RIGHT, padx=6, pady= 6)
 
-        self.entryText   = Entry(self, relief=SUNKEN,
+        var = StringVar()
+
+        self.entryText   = Entry(self, relief=SUNKEN, textvariable=var,
                            selectborderwidth=2, width=120,
                            font=("System",16), bd=4, bg="gray13",
-                           selectbackground="gray23",
+                           selectbackground="gray23", insertbackground="Goldenrod",
                            fg=fgtext)
+
         self.entryText.pack(side=LEFT,padx=0)
         self.entryText.focus_set()
         self.entryText.selection_range(0, END)
@@ -88,6 +92,7 @@ class gui(Frame):
 
     def OnButtonPress(self):
         self.e.command = self.entryText.get()
+        self.entryText.delete(0,END)
         self.e.do()
 
 

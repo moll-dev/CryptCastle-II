@@ -4,34 +4,79 @@ from ttk import Style
 class Engine():
 
     def __init__(self, parent):
-        self.command = ""
+        self.commandstr =""
         self.parent = parent
-        self.command = "herpderp"
+        self.command = Command("test", "test")
 
-    def step(commandstr):
-        command = Command(commandstr)
-        do(command)
+    def step(self):
+        command = Command(self.commandstr.split())
+
 
     def do(self):
         self.consolePrint(self.command)
 
-    def consolePrint(self,str):
+    def consolePrintln(self,str):
         self.parent.consoleText.configure(state='normal')
         self.parent.consoleText.insert(INSERT,str)
         self.parent.consoleText.insert(END, "\n")
         self.parent.consoleText.see(END)
+        self.consoleText.configure(state='disabled')
+
+    def consolePrint(self,str):
+        self.parent.consoleText.configure(state='normal')
+        self.parent.consoleText.insert(INSERT,str)
+        self.parent.consoleText.see(END)
+        self.parent.consoleText.configure(state='disabled')
 
 class Command(object):
 
-        def __init__(self,commandstr):
-            words = commandstr.split()
-            self.verb = words[0]
-            self.object = words[1]
+        def __init__(self,*args):
+            self.args = args
+            self.verb = args[0]
+            self.object = args[1]
+
+            print self.verb
+            print self.object
 
 class Player(object):
     hp = 100
+    stm = 100
+
+
     loc =[0,0]
+    map = "ballz"
+    inv =[]
+
     def move(self,direction):
         self.loc[0] += 1
         self.loc[1] += 1
 
+    def warp(self,map):
+        pass
+
+    def take(self,item):
+        self.inv.append(item)
+
+    def drop(self,item):
+        pass
+
+    def look(self,item):
+        pass
+
+class Item(object):
+    pass
+class Bucket(Item):
+
+    def __init__(self):
+        self.name = "Bucket"
+        self.desc = "It's a bucket"
+
+#TEST CODE
+
+e = Engine(None)
+e.commandstr="run west"
+command = e.commandstr.split()
+bucket = Bucket()
+adventurer = Player()
+adventurer.take(bucket)
+print adventurer.inv[0].name

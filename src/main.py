@@ -4,7 +4,7 @@
 
 from Tkinter import *
 from ttk import Style
-
+import time
 from gui import *
 from engine import *
 
@@ -23,8 +23,6 @@ def main():
     window.resizable(width=FALSE, height=FALSE)
 
     game = gui(window)
-
-
     window.mainloop()
 
 

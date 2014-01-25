@@ -1,6 +1,7 @@
 from Tkinter import *
 from ttk import Style
 from engine import *
+import time
 
 bgcolor = "grey26"
 bgtext  = "grey13"
@@ -22,6 +23,7 @@ class gui(Frame):
         self.initUI()
         self.initColor()
         self.buttonPress = False
+
     def initUI(self):
         self.parent.title("[ Crypt & Castle II ]")
         self.style = Style()
@@ -79,6 +81,19 @@ class gui(Frame):
 
         self.entryText.bind("<Return>", self.OnPressEnter)
 
+        self.entryText.insert(0,"Enter Text Here")
+        time.sleep(.2)
+        self.entryText.delete(0,END)
+        time.sleep(.2)
+        self.entryText.insert(0,"Enter Text Here")
+        time.sleep(.2)
+        self.entryText.delete(0,END)
+        time.sleep(.2)
+        self.entryText.insert(0,"Enter Text Here")
+        time.sleep(.2)
+        self.entryText.delete(0,END)
+
+
     def initColor(self):
         self.consoleText.tag_add("start", "1.8", "1.13")
         self.consoleText.tag_config("start", background="black", foreground="yellow")
@@ -86,10 +101,12 @@ class gui(Frame):
     def OnPressEnter(self,event):
         self.OnButtonPress()
 
+
+
     def OnButtonPress(self):
         self.e.command = self.entryText.get()
+        self.entryText.delete(0,END)
         self.e.do()
-
 
         '''
         self.statText.config(bg=fgtext)

@@ -15,13 +15,11 @@ class Engine():
     def do(self):
         self.consolePrint(self.command)
 
-
     def consolePrint(self,str):
         self.parent.consoleText.configure(state='normal')
         self.parent.consoleText.insert(INSERT,str)
         self.parent.consoleText.insert(END, "\n")
         self.parent.consoleText.see(END)
-        self.parent.consoleText.configure(state='disabled')
 
 class Command(object):
 

@@ -1,23 +1,25 @@
+from Tkinter import *
+from ttk import Style
 
+class Engine():
 
+    def __init__(self, parent):
+        self.command = ""
+        self.parent = parent
+        self.command = "herpderp"
 
+    def step(commandstr):
+        command = Command(commandstr)
+        do(command)
 
-def __init__(self):
-    self.player = Player()
+    def do(self):
+        self.consolePrint(self.command)
 
-
-def step(self,commandstr):
-    command = Command(commandstr)
-    self.do(command)
-
-def do(self,command):
-    verb = command.verb
-    object = command.object
-
-    if verb == "go":
-        self.player.move("north")
-
-
+    def consolePrint(self,str):
+        self.parent.consoleText.configure(state='normal')
+        self.parent.consoleText.insert(INSERT,str)
+        self.parent.consoleText.insert(END, "\n")
+        self.parent.consoleText.see(END)
 
 class Command(object):
 

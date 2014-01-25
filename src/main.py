@@ -6,6 +6,7 @@ from Tkinter import *
 from ttk import Style
 
 from gui import *
+from engine import *
 
 bgcolor = "grey26"
 bgtext  = "grey13"
@@ -23,13 +24,15 @@ def main():
 
     game = gui(window)
 
-    # game.bind("<Return>", parseCommand(game.entryText.))
 
-    game.statText.config(text='Welcome Adventurer!')
+    window.mainloop()
+
+
+
 
 
     #print game.consoleText.get(first,last)
-    window.mainloop()
+
 
 if __name__ == '__main__':
     main()

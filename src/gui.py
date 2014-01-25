@@ -18,9 +18,10 @@ class gui(Frame):
         Frame.__init__(self, parent)
         self.command = ""
         self.parent = parent
-        self.e = Engine()
+        self.e = Engine(self)
         self.initUI()
         self.initColor()
+        self.buttonPress = False
     def initUI(self):
         self.parent.title("[ Crypt & Castle II ]")
         self.style = Style()
@@ -86,11 +87,15 @@ class gui(Frame):
         self.OnButtonPress()
 
     def OnButtonPress(self):
+        self.e.command = self.entryText.get()
+        self.e.do()
+
+
+        '''
         self.statText.config(bg=fgtext)
         self.command = self.entryText.get()
         #Parse the text
 
-        self.e.step(self.command)
         self.consoleText.configure(state='normal')
         self.consoleText.insert(INSERT,self.command)
 
@@ -98,3 +103,4 @@ class gui(Frame):
         self.consoleText.configure(state='disabled')
         self.consoleText.see(END)
         self.statText.config(bg="DodgerBlue4")
+        '''

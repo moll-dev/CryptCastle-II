@@ -1,3 +1,6 @@
+import xml.dom.minidom
+world1xml = xml.dom.minidom.parse("world1.xml")
+
 class Map(object):
     height = 1000
     width = 1000
@@ -21,13 +24,14 @@ castle = Room("Castle","Herpderp")
 
 castle.contents[0] = "Spatula"
 
+a = world1xml.getElementsByTagName("World")[0]
+print a.attributes.items()
 
 
 
 
 
-
-
+#Test
 
 map = Map()
 map.grid[10][10] = "Outhouse"

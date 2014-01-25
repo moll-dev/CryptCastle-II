@@ -27,6 +27,7 @@ def main():
 
     game.statText.config(text='Welcome Adventurer!')
 
+
     #print game.consoleText.get(first,last)
     window.mainloop()
 

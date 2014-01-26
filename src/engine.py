@@ -1,27 +1,28 @@
 from Tkinter import *
 from ttk import Style
+from map import *
 
 class Engine():
 
     def __init__(self, parent):
         self.commandstr =""
         self.parent = parent
-        self.command = Command("test", "test")
         self.guy = Player()
+        self.command = ""
+
 
     def step(self):
-        command = Command(self.commandstr.split())
-        self.do(command)
+        self.do(self.command)
 
     def do(self, command):
-        self.consolePrint(command.verb)
+        self.consolePrintln(command)
 
     def consolePrintln(self,str):
         self.parent.consoleText.configure(state='normal')
         self.parent.consoleText.insert(INSERT,str)
         self.parent.consoleText.insert(END, "\n")
         self.parent.consoleText.see(END)
-        self.consoleText.configure(state='disabled')
+        self.parent.consoleText.configure(state='disabled')
 
     def consolePrint(self,str):
         self.parent.consoleText.configure(state='normal')
@@ -29,12 +30,28 @@ class Engine():
         self.parent.consoleText.see(END)
         self.parent.consoleText.configure(state='disabled')
 
-class Command(object):
+    def loadMap(self,file):
+        world1xml = xml.dom.minidom.parse(file)
+        root = world1xml.getElementsByTagName("World")[0]
+        worldattrs = dict(root.attributes.items())
+        self.world = World(worldattrs)
 
-        def __init__(self,*args):
-            self.args = args
-            self.verb = args[0]
-            self.object = args[1]
+        maps = world1xml.getElementsByTagName("Map")
+        attrs = dict(maps[0].attributes.items())
+
+        for x in range(root.getElementsByTagName("Map").length):
+            mapattrs = dict(maps[x].attributes.items())
+            loc = map(int,mapattrs['loc'].split())
+            self.world.appendMap(mapattrs)
+            for y in range(maps[x].getElementsByTagName("Room").length):
+                roomattrs = dict(maps[x].getElementsByTagName("Room")[y].attributes.items())
+                loc = map(int,mapattrs['loc'].split())
+                self.world.grid[loc[0]][loc[1]].appendRoom(roomattrs)
+
+class Command(object):
+        def __init__(self,string):
+            self.string = string
+
 
 class Player(object):
     hp = 100
@@ -72,11 +89,3 @@ class Bucket(Item):
         self.desc = "It's a bucket"
 
 #TEST CODE
-
-e = Engine(None)
-e.commandstr="run west"
-command = e.commandstr.split()
-bucket = Bucket()
-adventurer = Player()
-adventurer.take(bucket)
-print adventurer.inv[0].name

@@ -27,10 +27,6 @@ def main():
 
     window.mainloop()
 
-
-
-
-
     #print game.consoleText.get(first,last)
 
 

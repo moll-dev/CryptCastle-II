@@ -19,13 +19,16 @@ class gui(Frame):
         self.command = ""
         self.parent = parent
         self.e = Engine(self)
+        self.e.loadMap("world1.xml")
         self.initUI()
         self.initColor()
-        self.buttonPress = False
+
     def initUI(self):
+
+        #NOTE: this second needs to be refactored realllly badly
         self.parent.title("[ Crypt & Castle II ]")
         self.style = Style()
-        self.style.theme_use("clam")
+        #self.style.theme_use("clam")
         self.config(bg=bgcolor)
         self.pack(fill=BOTH, expand=1)
 
@@ -89,7 +92,7 @@ class gui(Frame):
     def OnButtonPress(self):
         self.e.command = self.entryText.get()
         self.e.step()
-
+        self.entryText.delete(0,END)
 
         '''
         self.statText.config(bg=fgtext)

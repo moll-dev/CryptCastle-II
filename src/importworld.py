@@ -28,15 +28,8 @@ for x in range(root.getElementsByTagName("Map").length):
         loc = map(int,mapattrs['loc'].split())
         world.grid[loc[0]][loc[1]].appendRoom(roomattrs)
 
-print world.grid[5][5].name
-print world.grid[5][5].grid[2][2].exits
-print world.grid[5][5].grid[2][2].canExit("north")
-print world.grid[5][5].grid[2][2].canExit("south")
-print world.grid[5][5].grid[2][2].canExit("east")
-print world.grid[5][5].grid[2][2].canExit("west")
-print world.grid[5][5].grid[2][2].canExit("up")
-print world.grid[5][5].grid[2][2].canExit("down")
-
+print world.grid[2][2].name
+print world.grid[2][2].grid[1][4].name
 
 
 

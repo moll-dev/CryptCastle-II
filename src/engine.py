@@ -8,14 +8,13 @@ class Engine():
         self.commandstr =""
         self.parent = parent
         self.guy = Player()
-        self.command = ""
 
 
     def step(self):
-        self.do(self.command)
+        self.do(self.commandstr)
 
-    def do(self, command):
-        self.consolePrintln(command)
+    def do(self, commandstr):
+        self.consolePrintln(commandstr)
 
     def consolePrintln(self,str):
         self.parent.consoleText.configure(state='normal')
@@ -39,14 +38,21 @@ class Engine():
         maps = world1xml.getElementsByTagName("Map")
         attrs = dict(maps[0].attributes.items())
 
+        rooms = 0
         for x in range(root.getElementsByTagName("Map").length):
             mapattrs = dict(maps[x].attributes.items())
             loc = map(int,mapattrs['loc'].split())
             self.world.appendMap(mapattrs)
+
             for y in range(maps[x].getElementsByTagName("Room").length):
                 roomattrs = dict(maps[x].getElementsByTagName("Room")[y].attributes.items())
                 loc = map(int,mapattrs['loc'].split())
                 self.world.grid[loc[0]][loc[1]].appendRoom(roomattrs)
+            rooms += y
+        x = x+1
+        rooms = rooms+1
+        self.consolePrintln("Loaded "+str(x)+" total Maps")
+        self.consolePrintln("With "+str(rooms)+" total Rooms")
 
 class Command(object):
         def __init__(self,string):

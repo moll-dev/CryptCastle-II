@@ -19,9 +19,9 @@ class gui(Frame):
         self.command = ""
         self.parent = parent
         self.e = Engine(self)
-        self.e.loadMap("world1.xml")
         self.initUI()
         self.initColor()
+        self.e.loadMap("world1.xml")
 
     def initUI(self):
 
@@ -90,7 +90,7 @@ class gui(Frame):
         self.OnButtonPress()
 
     def OnButtonPress(self):
-        self.e.command = self.entryText.get()
+        self.e.commandstr = self.entryText.get()
         self.e.step()
         self.entryText.delete(0,END)
 

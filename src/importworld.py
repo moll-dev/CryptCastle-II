@@ -30,6 +30,8 @@ for x in range(root.getElementsByTagName("Map").length):
 
 print world.grid[2][2].name
 print world.grid[2][2].grid[1][4].name
+print world.grid[5][5].name
+print world.grid[5][5].grid[2][2].name
 
 
 

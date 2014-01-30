@@ -8,4 +8,6 @@ Objects:
       needs to be initialized with a dictionary of values, these include:
         name,desc,size
         
-        Example in python '''pyhton{'name': 'World1', 'desc': 'This is a world'}'''
+        Example in python '''python
+        {'name': 'World1', 'desc': 'This is a world'}
+        '''

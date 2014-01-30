@@ -14,7 +14,6 @@ fgtext  = "dark goldenrod"
 class gui(Frame):
 
     def __init__(self, parent):
-
         Frame.__init__(self, parent)
         self.command = ""
         self.parent = parent
@@ -22,10 +21,11 @@ class gui(Frame):
         self.initUI()
         self.initColor()
         self.e.loadMap("world1.xml")
+        self.e.initPlayer()
 
     def initUI(self):
 
-        #NOTE: this second needs to be refactored realllly badly
+        #NOTE: this section needs to be refactored realllly badly
         self.parent.title("[ Crypt & Castle II ]")
         self.style = Style()
         #self.style.theme_use("clam")
@@ -91,8 +91,17 @@ class gui(Frame):
 
     def OnButtonPress(self):
         self.e.commandstr = self.entryText.get()
-        self.e.step()
+        if self.entryText.get() == "exit":
+            self.e.consolePrintln("Good Bye Adventurer!")
+            self.parent.quit()
+
+        elif self.e.commandstr.isspace()== True or len(self.entryText.get()) == 0:
+            pass
+        else:
+            self.entryText.delete(0,END)
+            self.e.step()
         self.entryText.delete(0,END)
+
 
         '''
         self.statText.config(bg=fgtext)

@@ -9,11 +9,11 @@ class World(object):
         self.desc = attrs['desc']
         self.grid = [[None for _ in range(self.size[0])]for _ in range(self.size[1])]
 
-    def appendMap(self, mapattrs):
-        loc = map(int,mapattrs['loc'].split())
-        self.grid[loc[0]][loc[1]] = Map(self,mapattrs)
+    def appendRegion(self, regionattrs):
+        loc = map(int,regionattrs['loc'].split())
+        self.grid[loc[0]][loc[1]] = Region(self,regionattrs)
 
-class Map(object):
+class Region(object):
 
     def __init__(self,parent,attrs):
         self.parent = parent
@@ -36,6 +36,7 @@ class Room(object):
     def __init__(self, parent,attrs):
         self.parent = parent
         self.loc = map(int,attrs['loc'].split())
+
         self.name = attrs['name']
         self.desc = attrs['desc']
         self.exits = repr(attrs['exits'].split())

@@ -25,7 +25,7 @@ def main():
     game = gui(window)
 
 
-    window.mainloop()
+    game.mainloop()
 
     #print game.consoleText.get(first,last)
 

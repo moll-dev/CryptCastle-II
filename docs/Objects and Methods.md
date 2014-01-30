@@ -10,6 +10,9 @@ name,desc,size
 ```python
 #Python Example
 attributes = {'name': 'World1', 'desc': 'This is a world', 'size':'10 10'}
+
+#Create a new world object with the attributes defined above
+world1 = World(attributes)
 ```
 ```xml
 XML example

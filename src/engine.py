@@ -26,7 +26,7 @@ class Engine():
         dropverbs = {'d','drop','leave','toss'}
         lookverbs = {'x','examine','look'}
         helpverbs  = {'h','help', 'help!'}
-        verbs = (runverbs,takeverbs,runverbs,dropverbs,lookverbs,helpverbs)
+        verbs = (runverbs,takeverbs,runverbs,dropverbs,lookverbs ,helpverbs)
 
         command.update(self.commandstr)
         iskeyword = False
@@ -101,10 +101,10 @@ class Engine():
         worldattrs = dict(root.attributes.items())
         self.world = World(worldattrs)
 
-        regions = world1xml.getElementsByTagName("Map")
+        regions = world1xml.getElementsByTagName("Region")
         attrs = dict(regions[0].attributes.items())
 
-        for x in range(root.getElementsByTagName("Map").length):
+        for x in range(root.getElementsByTagName("Region").length):
             mapattrs = dict(regions[x].attributes.items())
             loc = map(int,mapattrs['loc'].split())
             self.world.appendRegion(mapattrs)
@@ -112,6 +112,7 @@ class Engine():
                 roomattrs = dict(regions[x].getElementsByTagName("Room")[y].attributes.items())
                 loc = map(int,mapattrs['loc'].split())
                 self.world.grid[loc[0]][loc[1]].appendRoom(roomattrs)
+        print("loaded "+str(x))
 
 class Command(object):
         def __init__(self,string):
@@ -179,3 +180,4 @@ class Bucket(Item):
         self.desc = "It's a bucket"
 
 #TEST CODE
+print

@@ -23,9 +23,15 @@ def main():
     window.resizable(width=FALSE, height=FALSE)
 
     game = gui(window)
-
-
+    try:
+        window.wm_iconbitmap("cc2.ico")
+        window.mainloop()
+    except TclError:
+        print 'No ico file found'
     game.mainloop()
+
+
+
 
     #print game.consoleText.get(first,last)
 

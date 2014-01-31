@@ -1,13 +1,16 @@
 # Objects and You:
 
-######This readme file was created for devs to get a good understanding of the objects and their attributes and methods in CryptCastle-II. It's going to be frequesntly updated! So if you don't know where to look this is probably a good place to start. 
+######This readme file was created for devs to get a good understanding of the objects and their attributes and methods in CryptCastle-II. It's going to be frequently updated! So if you don't know where to look this is probably a good place to start.
+Quicklinks:
+[Engine](https://github.com/QuantumFractal/CryptCastle-II/edit/master/docs/Objects%20and%20Methods.md#engine-objects)
+[Gui](https://github.com/QuantumFractal/CryptCastle-II/edit/master/docs/Objects%20and%20Methods.md#gui-objects)
+[World](https://github.com/QuantumFractal/CryptCastle-II/edit/master/docs/Objects%20and%20Methods.md#world-objects)
 
-These are all subject to change! Although Tom will update this as he adds new methods :)
 #Engine Objects
 
 ######These objects are all related to the Engine.py file and handle pretty much everything relating to the game's inner workings.
 
-##Engine Object
+##The Engine Object itself
 This is THE object that is created by the Gui object (when initialized) and pretty much handles all behind the scenes aspects of the game.
 
 ##Engine.initPlayer()
@@ -25,16 +28,37 @@ Steps the engine! This is where all calculations, combat, etc will go.
 And it runs the Engine.do() command which is pretty important (see Engine.do())
 
 ##Engine.do()
-This is it, the meat and potatos of the engine. This method 
+This is it, the meat and potatos of the engine. This method requires no parameters, and relies on the Command object which gets updated within this method.
+>Engine.do() takes all the verbs and checks against them to correctly select the action needed and then preforms that on the object.
 
 ##Player Object
-Needs to be initialized with a dictionary of values, these include:
-name,desc,size.
+Needs to be initialized with a parent (usually the engine or self), region x and y, and a room x and y, and then a list of items (as objects not as strings)
+
+##Player.move()
+This method simply checks if a player can move by calling the .updateRoom method, and then checking the room's exits to see if the player can actually exit! If the player can exit, the coordinates of the player will be incremented by a vector direction function (still to be written!!)
+
+Example in python: 
+```python
+user.move('north')
+```
+
+##Player.warp()
+This method does the same exact thing as player.move with the exception of jumping regions although note this has NOT been implimented!!!
+
+##Player.take()
+Not finished! but should TAKE the item passed as a parameter
+
+##Player.drop()
+Not finished! but should drop an item in the inventory given an item as a parameter
+
+
+##Player.look()
+Not finished, but should return the description of an item in the inventory or room.
 
 
 Example in python: 
 ```python
-attributes = {'name': 'World1', 'desc': 'This is a world'}
+user.look('beer')
 ```
 
 #Gui Objects
@@ -88,10 +112,12 @@ def OnButtonPress(self):
   self.entryText.delete(0,END)                   #Clears the entryText box for the next command!
 ```
 #World Objects:
-
-##World():
+Note for all lists that need to be inputed with XML use a space character as a delimter
+For Example:
+the position 2,2 becomes "2 2"
+##World
 needs to be initialized with a dictionary of values, these include:
-name,desc,size
+name,desc,size NOTE: order of attrs do NOT matter
       
 ```python
 #Python Example
@@ -102,12 +128,39 @@ world1 = World(attributes)
 ```
 ```xml
 XML TAG example
-<World size = "10 10" name="Middle Earth" desc="hobbits are here">
+<World size = "10 10" name="World1" desc="This is a world">
 </World>
 ```
 
-##Map():
+##Region
 needs to be initialized just like World with these values:
-loc, name, desc, contents, exits
-    
+loc, size, name, desc.
+```python
+#Python Example
+attributes = {'name': 'Region1', 'desc': 'This is a region', 'size':'10 10', 'loc':'2 2'}
+
+#Create a new world object with the attributes defined above
+region1 = region(attributes)
+```
+```xml
+XML TAG example
+<Region loc="2 2" size = "10 10" name="Region1" desc="This is a region">
+</Region>
+```
+
+##Room
+needs to be initialized just like World and Region with these values:
+loc, name, desc, and items
+```python
+#Python Example
+attributes = {'name': 'Room1', 'desc': 'This is a room, 'loc':'3 4'}
+
+#Create a new world object with the attributes defined above
+region1 = region(attributes)
+```
+```xml
+XML TAG example
+<Region loc="3 4" name="Room1" desc="This is a room">
+</Region>
+```
 

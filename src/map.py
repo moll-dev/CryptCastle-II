@@ -21,11 +21,11 @@ class Region(object):
         self.size= map(int,attrs['size'].split())
         self.name = attrs['name']
         self.desc = attrs['desc']
-        self.grid = [[None for _ in range(self.size[0])]for _ in range(self.size[1])]
+        self.grid = [[[None for _ in range(self.size[0])]for _ in range(self.size[1])]for _ in xrange(self.size[2])]
 
     def appendRoom(self, roomattrs):
         loc = map(int,roomattrs['loc'].split())
-        self.grid[loc[0]][loc[1]] = Room(self,roomattrs)
+        self.grid[loc[0]][loc[1]][loc[2]] = Room(self,roomattrs)
 
     def getRoom(self, x,y):
         return self.grid[x][y]
@@ -41,7 +41,7 @@ class Room(object):
         self.desc = attrs['desc']
         self.exits = repr(attrs['exits'].split())
 
-    def canExit(self,entry):
+    def canExit(self,exit):
         if (entry == "north") and self.exits[0]:
             return True
 

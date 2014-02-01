@@ -1,7 +1,7 @@
 from Tkinter import *
 from ttk import Style
 from map import *
-from math import *
+from statinfo import *
 
 class Engine():
     turncount = 0
@@ -12,7 +12,14 @@ class Engine():
         self.command = Command(self.commandstr)
 
     def initPlayer(self):
-        self.user = Player(self, [1,1],[2,2,3],None)
+        self.user = Player(self, [1,1],[1,1,1],None)
+        self.consolePrintln("["+self.user.room.name+"]")
+        self.consolePrintln(self.user.room.desc+"\n")
+
+    def initStats(self):
+        self.statBar = StatBar(self,self.parent)
+        self.objBox  = ObjBox(self,self.parent)
+        self.invBox = InvBox(self,self.parent)
 
     def step(self):
         self.turncount += 1
@@ -50,8 +57,12 @@ class Engine():
             if self.command.object is None:
                 self.consolePrintln(command.verb.capitalize()+" where?")
             else:
-                self.consolePrintln("You went "+command.object+".")
-                player.move(command.object)
+                if player.move(command.object):
+                    self.consolePrintln("You went "+command.object+".\n")
+                    self.consolePrintln("["+player.room.name+"]")
+                    self.consolePrintln(player.room.desc+"\n")
+                else:
+                    self.consolePrintln("You can't go "+command.object+".")
                                                                         ###This Section Handles taking an object
         elif command.verb in takeverbs:
             if self.command.object is None:
@@ -116,6 +127,27 @@ class Engine():
                 loc = map(int,mapattrs['loc'].split())
                 self.world.grid[loc[0]][loc[1]].appendRoom(roomattrs)
 
+    def vectorAdd(self,loc,direction):
+        north = ["north","n"]
+        south = ["south","s"]
+        east = ["east","e"]
+        west = ["west","w"]
+        up = ["up","u"]
+        down = ["down","d"]
+
+        if direction in north:
+            loc[1]-=1
+        elif direction in south:
+            loc[1]+=1
+        elif direction in east:
+            loc[0]+=1
+        elif direction in west:
+            loc[0]-=1
+        elif direction in up:
+            loc[2]+=1
+        elif direction in down:
+            loc[2]-=1
+
 class Command(object):
         def __init__(self,string):
             self.string = string
@@ -146,6 +178,7 @@ class Player(object):
     stm = 100
 
     loc =[0,0,0]
+    Rlock = [0,0]
     region = "region"
     room = "room"
     inv =[]
@@ -154,11 +187,19 @@ class Player(object):
         self.parent = parent
         self.region = self.parent.world.grid[region[0]][region[1]]
         self.room = self.region.grid[room[0]][room[1]][room[2]]
+        self.loc = room
+        self.rloc = region
         self.inventory = inv
 
     def move(self,direction):
-        if self.room.canExit(direction):
-            vectorAdd(self.loc,direction)
+        if self.room is None:
+            return False
+        elif self.room.canExit(direction):
+            print "went "+direction
+            print self.loc
+            self.parent.vectorAdd(self.loc,direction)
+            print self.loc
+            self.room = self.region.getRoom(self.loc[0],self.loc[1],self.loc[2])
             return True
         else:
             return False

@@ -12,9 +12,9 @@ def main():
 
     window.geometry("800x600+560+150")
     game = gui(window)
+    window.resizable(False, False)
     try:
         window.wm_iconbitmap("cc2.ico")
-        window.mainloop()
     except TclError:
         print 'No ico file found'
 

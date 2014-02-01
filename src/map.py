@@ -27,8 +27,8 @@ class Region(object):
         loc = map(int,roomattrs['loc'].split())
         self.grid[loc[0]][loc[1]][loc[2]] = Room(self,roomattrs)
 
-    def getRoom(self, x,y):
-        return self.grid[x][y]
+    def getRoom(self, x,y,z):
+        return self.grid[x][y][z]
 
 class Room(object):
     contents = [None]
@@ -39,25 +39,25 @@ class Room(object):
 
         self.name = attrs['name']
         self.desc = attrs['desc']
-        self.exits = repr(attrs['exits'].split())
+        self.exits = map(bool,map(int,attrs['exits'].split()))
 
     def canExit(self,exit):
-        if (entry == "north") and self.exits[0]:
+        if (exit == "north") and self.exits[0]:
             return True
 
-        if (entry == "south") and self.exits[1]:
+        if (exit == "south") and self.exits[1]:
             return True
 
-        if (entry == "east")  and self.exits[2]:
+        if (exit == "east")  and self.exits[2]:
             return True
 
-        if (entry == "west")  and self.exits[3]:
+        if (exit == "west")  and self.exits[3]:
             return True
 
-        if (entry == "up")    and self.exits[4]:
+        if (exit == "up")    and self.exits[4]:
             return True
 
-        if (entry == "down")  and self.exits[4]:
+        if (exit == "down")  and self.exits[5]:
             return True
 
         else:

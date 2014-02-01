@@ -150,7 +150,7 @@ XML TAG example
 
 ##Room
 needs to be initialized just like World and Region with these values:
-loc, name, desc, and items
+loc, name, desc, exits, and items
 ```python
 #Python Example
 attributes = {'name': 'Room1', 'desc': 'This is a room, 'loc':'3 4'}
@@ -163,4 +163,6 @@ XML TAG example
 <Region loc="3 4" name="Room1" desc="This is a room">
 </Region>
 ```
+##Room.canExit()
+Returns whether a player can or cannot exit a room! (In a certain direction)
 

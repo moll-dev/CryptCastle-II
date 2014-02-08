@@ -1,6 +1,7 @@
 from Tkinter import *
 from ttk import Style
 from map import *
+from statinfo import *
 
 class Engine():
     turncount = 0
@@ -11,7 +12,14 @@ class Engine():
         self.command = Command(self.commandstr)
 
     def initPlayer(self):
-        self.user = Player(self, [5,5],[2,2],None)
+        self.user = Player(self, [1,1],[1,1,1],None)
+        self.consolePrintln("["+self.user.room.name+"]")
+        self.consolePrintln(self.user.room.desc+"\n")
+
+    def initStats(self):
+        self.statBar = StatBar(self,self.parent)
+        self.objBox  = ObjBox(self,self.parent)
+        self.invBox = InvBox(self,self.parent)
 
     def step(self):
         self.turncount += 1
@@ -20,17 +28,18 @@ class Engine():
     def do(self):
         command = self.command
         player = self.user
-
+                                                                        ###List of verbs
         runverbs  = {'g','travel','run', 'go', 'move','walk','climb'}
         takeverbs = {'t','take','pickup','grab'}
         dropverbs = {'d','drop','leave','toss'}
         lookverbs = {'x','examine','look'}
-        helpverbs  = {'h','help', 'help!'}
-        verbs = (runverbs,takeverbs,runverbs,dropverbs,lookverbs ,helpverbs)
+        helpverbs = {'h','help', 'help!'}
+
+        verbs = (runverbs,takeverbs,runverbs,dropverbs,lookverbs ,helpverbs)    ##With a Master verblist
 
         command.update(self.commandstr)
         iskeyword = False
-        for x in verbs:
+        for x in verbs:                                            ##Check if our verb is in the list of verbs
             if command.verb in x:
                 iskeyword=True
         if iskeyword:
@@ -42,26 +51,31 @@ class Engine():
             self.consolePrintcmd(self.commandstr)
             self.consolePrintln("I don't understand that verb.")
 
-        #Verb Break down!
+
+        #Verb Break down!                                               ###This Section Handles running
         if command.verb in runverbs:
             if self.command.object is None:
                 self.consolePrintln(command.verb.capitalize()+" where?")
             else:
-                self.consolePrintln("You went "+command.object+".")
-                player.move(command.object)
-
+                if player.move(command.object):
+                    self.consolePrintln("You went "+command.object+".\n")
+                    self.consolePrintln("["+player.room.name+"]")
+                    self.consolePrintln(player.room.desc+"\n")
+                else:
+                    self.consolePrintln("You can't go "+command.object+".")
+                                                                        ###This Section Handles taking an object
         elif command.verb in takeverbs:
             if self.command.object is None:
                 self.consolePrintln(command.verb.capitalize()+" what?")
             else:
                 self.consolePrintln("You took "+command.object+".")
-
+                                                                        ###This Section Handles dropping an object
         elif command.verb in dropverbs:
             if self.command.object is None:
                 self.consolePrintln(command.verb.capitalize()+" what?")
             else:
                 self.consolePrintln("You dropped"+command.object+".")
-
+                                                                        ###This Section Handles looking at rooms/objects
         elif command.verb in lookverbs:
             if self.command.object is None:
                 self.consolePrintln(command.verb+" where?")
@@ -69,27 +83,27 @@ class Engine():
                 self.consolePrintln("You ran!")
                 player.move(command.object)
             self.consolePrintln("You looked at that!")
-
+                                                                        ###This Section Handles the help messages
         elif command.verb in helpverbs:
             self.consolePrintln("Put help stuff here")
 
         self.consolePrintln("")
 
-    def consolePrintln(self,str):
+    def consolePrintln(self,str):                                       ###Enables, adds text, then disables the console
         self.parent.consoleText.configure(state='normal')
         self.parent.consoleText.insert(INSERT,str)
         self.parent.consoleText.insert(END, "\n")
         self.parent.consoleText.see(END)
         self.parent.consoleText.configure(state='disabled')
 
-    def consolePrintcmd(self,str):
+    def consolePrintcmd(self,str):                         ###Does the same thing but appends a '>' character
         self.parent.consoleText.configure(state='normal')
         self.parent.consoleText.insert(INSERT,"> "+str)
         self.parent.consoleText.insert(END, "\n")
         self.parent.consoleText.see(END)
         self.parent.consoleText.configure(state='disabled')
 
-    def consolePrint(self,str):
+    def consolePrint(self,str):                            ###Prints normally with NO newline
         self.parent.consoleText.configure(state='normal')
         self.parent.consoleText.insert(INSERT,str)
         self.parent.consoleText.see(END)
@@ -112,7 +126,27 @@ class Engine():
                 roomattrs = dict(regions[x].getElementsByTagName("Room")[y].attributes.items())
                 loc = map(int,mapattrs['loc'].split())
                 self.world.grid[loc[0]][loc[1]].appendRoom(roomattrs)
-        print("loaded "+str(x))
+
+    def vectorAdd(self,loc,direction):
+        north = ["north","n"]
+        south = ["south","s"]
+        east = ["east","e"]
+        west = ["west","w"]
+        up = ["up","u"]
+        down = ["down","d"]
+
+        if direction in north:
+            loc[1]-=1
+        elif direction in south:
+            loc[1]+=1
+        elif direction in east:
+            loc[0]+=1
+        elif direction in west:
+            loc[0]-=1
+        elif direction in up:
+            loc[2]+=1
+        elif direction in down:
+            loc[2]-=1
 
 class Command(object):
         def __init__(self,string):
@@ -143,23 +177,34 @@ class Player(object):
     hp = 100
     stm = 100
 
-    loc =[0,0]
-    region = "map"
+    loc =[0,0,0]
+    Rlock = [0,0]
+    region = "region"
     room = "room"
     inv =[]
 
-    def __init__(self, parent, map, room, inv):
+    def __init__(self, parent, region, room, inv):
         self.parent = parent
-        self.region = self.parent.world.grid[map[0]][map[1]]
-        self.room = self.region.grid[room[0]][room[1]]
+        self.region = self.parent.world.grid[region[0]][region[1]]
+        self.room = self.region.grid[room[0]][room[1]][room[2]]
+        self.loc = room
+        self.rloc = region
         self.inventory = inv
 
     def move(self,direction):
-        self.loc[0] += 1
-        self.loc[1] += 1
-        self.room = self.region.getRoom(self.loc[0],self.loc[1])
+        if self.room is None:
+            return False
+        elif self.room.canExit(direction):
+            print "went "+direction
+            print self.loc
+            self.parent.vectorAdd(self.loc,direction)
+            print self.loc
+            self.room = self.region.getRoom(self.loc[0],self.loc[1],self.loc[2])
+            return True
+        else:
+            return False
 
-    def warp(self,map):
+    def warp(self,region):
         pass
 
     def take(self,item):
@@ -180,4 +225,3 @@ class Bucket(Item):
         self.desc = "It's a bucket"
 
 #TEST CODE
-print

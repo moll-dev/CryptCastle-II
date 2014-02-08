@@ -22,6 +22,7 @@ class gui(Frame):
         self.initColor()
         self.e.loadMap("world1.xml")
         self.e.initPlayer()
+        self.e.initStats()
 
     def initUI(self):
 
@@ -101,6 +102,7 @@ class gui(Frame):
             self.entryText.delete(0,END)
             self.e.step()
         self.entryText.delete(0,END)
+
 
 
         '''
